@@ -11,7 +11,7 @@ library(lubridate)
 setwd("/Users/catalinafernandez/Library/CloudStorage/OneDrive-Personal/Growth_Project/Data/")
 
 # 1. Check if data is on csv format and can be read, otherwise convert to csv
-# 2. Check if there are one or more sheets in case there is a xls file
+# 2. Check if there are one or more sheets in case there is a .xls file
 # 3. Check if N of column names match columns of data
 # 4. Check if periods are used for decimals 
 # 5. Check that dates are in dd/mm/yyyy format
@@ -22,9 +22,19 @@ setwd("/Users/catalinafernandez/Library/CloudStorage/OneDrive-Personal/Growth_Pr
 
 
 
-csvpip <- read.csv("Caxiuana_longitudinal_dataset_2002_2009_formatted_csv.csv", sep = ";")
+ziker <- read.csv("Ziker_Growth_Project_Ust_Avam.csv")
+glimpse (ziker)
 
-# Check 4 and change.
+#Check 1-7 
+ziker <- ziker %>%
+  mutate (BirthDate = format(as.Date(BirthDate),"%d/%m/%Y"),
+         DateDataCollection = format(as.Date(DateDataCollection),"%d/%m/%Y"), 
+         Height = Height *100) #to convert to cm 
+
+
+
+
+
 csvpip <- csvpip %>% 
   mutate (Heightcm_2002 = gsub (",",".", Heightcm_2002),
           Heightcm_2009 = gsub (",",".", Heightcm_2009),
