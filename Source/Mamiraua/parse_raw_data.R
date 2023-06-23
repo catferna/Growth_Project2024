@@ -82,7 +82,7 @@ dat$height_cm <- as.numeric(dat$height_cm)
 
 dat <- filter(dat, !is.na(height_cm) | !is.na(weight_kg))
 
-dat$site <- "Mamirua"
+dat$site <- "Mamiraua"
 
 stopifnot(nrow(dat) == 700)
 
