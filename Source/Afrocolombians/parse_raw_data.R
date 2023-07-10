@@ -104,12 +104,12 @@ dat <- dat %>%
   select (obs_id, person_id, sex, ethnicity,location, height_cm, weight_kg,date_of_measure,
           min_date_birth, estim_date_birth, max_date_birth)
 
-#add site name column
+#5. add site name column
 
 dat$site <- "colombia" 
 
 
-write.csv(dat, "site_measurements.csv", row.names = FALSE)
+#write.csv(dat, "site_measurements.csv", row.names = FALSE)
 
 
 
