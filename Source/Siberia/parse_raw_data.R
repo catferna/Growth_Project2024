@@ -84,7 +84,7 @@ rm(list = ls())
 #########################
 ##### CLEAN DATA ########
 #########################
-
+rm(list = ls())
 dat <- read.csv("site_measurements.csv")
 
 # Check height and weight values
@@ -92,7 +92,9 @@ dat <- read.csv("site_measurements.csv")
 
 #For individual 577, obs. #mg64m, correct value (it's 15000.0)
 dat$height_cm [which(dat$obs_id=="mg64m")] <- 150.0
+dat <- dat  %>% 
+  mutate (site = "Siberia")
 
-dat <- read.csv("site_measurements.csv")
+write.csv(dat, "site_measurements.csv", row.names = FALSE)
 
 
