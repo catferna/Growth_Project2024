@@ -58,6 +58,7 @@ dat <- dat %>%
 
 glimpse (dat)
 
+dat <- dat [, c ("person_id","obs_id", "sex", "site", "age_years", "age_months", "height_cm", "weight_kg")]
 write.csv(dat, "site_measurements.csv", row.names = FALSE)
 
 
