@@ -64,7 +64,8 @@ dat <- dat %>%
 
 glimpse (dat)
 
-dat <- dat [, c ("person_id","obs_id", "sex", "site", "ethnicity", "birth_year", "date_of_measure", "height_cm", "weight_kg")]
+dat <- dat [, c ("person_id","obs_id", "sex", "site", "ethnicity", "birth_year","observation_year", "date_of_measure", "height_cm", "weight_kg")]
+
 
 #12-. Save dataframe as "site_measurements.csv"
 write.csv(dat, "site_measurements.csv", row.names = FALSE)
