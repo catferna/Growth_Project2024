@@ -130,7 +130,6 @@ down %>%
 dat$height_cm [which(dat$obs_id=="tw4l1")] <-NA
 
 # a2. ind. 249, obs #ok853 most likely a typo considering previous and after heights. 
-
 dat$height_cm [which(dat$obs_id=="ok853")] <- 84.5 # changed from 81.5
 
 #13. Check how many height obs. goes up more than 10cm in a period of 1 year or less.
@@ -158,8 +157,6 @@ sum(is.na(dat[["weight_kg"]])) #8 weight are NA
 # #2789 obs.loaded; KEPT 2777  (12 obs. removed entirely) 
 #  74 NA height loaded; now  68
 # 14  weight loaded; kept 8  weight NA
-
-### The numbers of NA needs to be. updated once Katherine Wander replies e-mail 
 
 
 #write.csv(dat, "site_measurements.csv",row.names = FALSE)
