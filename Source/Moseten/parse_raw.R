@@ -3,7 +3,8 @@
 #############################################################
 
 #Author: catalina fernandez
-#starting commit: c5ce524
+#starting commit: c5ce524; 
+#data downloaded from https://github.com/babeheim/tsimane-moseten-growth-curves; commit #fedb54a
 
 setwd("/Users/catalinafernandez/Library/CloudStorage/OneDrive-Personal/Growth_Project/Source/Moseten/")
 

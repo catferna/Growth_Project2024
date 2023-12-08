@@ -2,7 +2,8 @@
 ################ Cleaning MOSETEN  data ################
 ###########################################################
 
-# starting commit:62477c6
+# starting commit:62477c6 
+#original data downloaded from https://github.com/babeheim/tsimane-moseten-growth-curves; commit #fedb54a
 #Author: catalina fernandez
 
 
