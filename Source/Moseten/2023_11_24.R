@@ -72,22 +72,24 @@ ggplot(dat, aes(x =age_estimated, y = weight_kg , group = person_id))+
   geom_point() #definitely many weird cases, babies way too heavy 
 
 
-######### check with  BRET!! 
-
 sub20 <- dat %>% filter(age_estimated <20)
 
+# List of unreliable height/weight measurements:
+#28204, #4604, #5170, #13453, #30987, #25610, #15702, #400 
+#########  ------>>>>> check with  BRET!! <<<<<<<----------
 
 # 9. Check if all individuals have sex 
 
-miss_sex <- dat %>% filter(is.na(sex)) # xxx cells where sex is NA
+miss_sex <- dat %>% filter(is.na(sex)) # NO cells where sex is NA
+
 #Often, cells are empty instead of having a NA. The following script get those:
 library(stringr)
 fil <- dat %>%
   group_by(person_id) %>%
-  filter(any(str_detect(sex, "^\\s*$"))) # xxx sex cells that are empty
+  filter(any(str_detect(sex, "^\\s*$"))) # NO missing
 empty_sex_individuals <- dat %>%
   group_by(person_id) %>%
-  filter(any(str_detect(sex, "^\\s*$"))) %>% # 9 individuals have missing sex. Originally 10 
+  filter(any(str_detect(sex, "^\\s*$"))) %>% # NO inds have missing sex.
   select(person_id) %>% 
   distinct()
 
@@ -111,14 +113,45 @@ down <- long %>%
 #13. count n of obs that goes down.
 down %>%
   distinct(person_id) %>%
-  count() # xxx individuals shrink >3 cm : xxx, xxx 
+  count() # xxx individuals shrink >3 cm : 20 ind (above), but only one is younger than 25. 
+#older ind. will not be used for the Growth analysis.
+
+
+#check the 20 ppl that have obs. that goes down >3 cm
+check_down <- dat %>% filter(person_id %in% down$person_id)
+
+#12a. ind #3565 over 40yo so keep it as it is
+#12b. ind #4479 over 70yo so keep it as it is
+#12c.ind #5912 over 70yo so keep it as it is
+#12d.ind #7007 over 60yo so keep it as it is
+#12e.ind #7194 over 40yo so keep it as it is
+#12f.ind #11095 over 50yo so keep it as it is 
+#12g.ind #12708 over 40yo so keep it as it is
+#12h.ind #12813 over 70yo so keep it as it is
+#12i.ind #14971 over 70yo so keep it as it is
+#12j. ind #16980  over 40yo so keep it as it is
+#12k. ind #17088 over 60yo so keep it as it is
+#12l. ind #17791  over 80yo so keep it as it is
+#12m. ind #17951  over 60yo so keep it as it is
+#12n. ind #19186 25 yo, both height and weight decreases significantly over a ±1.5 year span
+#probably different individuals. Delete  both observations for ind. 19186 entirely
+
+dat <- dat %>%
+  filter(person_id != "19186")
+
+#12o. ind #20776 over 40yo so keep it as it is
+#12p. ind #23560 over 45yo so keep it as it is
+#12q. ind #26933 over 40yo so keep it as it is; one obs is clearly a diff. ind. 
+#12r. ind #27310 over 70yo so keep it as it is
+#12s. ind #30271 over 50yo so keep it as it is
+#12t. ind #32264 over 50yo so keep it as it is
 
 # a1. ind.xxx, obs #xxx height is inconsistent with trajectory. if weight seems ok, only rm height:
-dat$height_cm [which(dat$obs_id=="xxx")] <-NA
+#dat$height_cm [which(dat$obs_id=="xxx")] <-NA
 
 # a.2. ind. xxx, obs #xxx, explain why changing the value in the cell. 
 
-dat$height_cm [which(dat$obs_id=="xxx")] <- xxx # changed from xxx
+#dat$height_cm [which(dat$obs_id=="xxx")] <- xxx # changed from xxx
 
 #14. Check how many height obs. goes up more than 10cm in a period of 1 year or less.
 
@@ -132,19 +165,18 @@ up <- long %>%
   mutate(time_elap = as.numeric (age_estimated - first(age_estimated)),
          obs_diff = height_cm - lag(height_cm, default = first(height_cm))) %>%
   ungroup() %>%
-  filter(person_id %in% unique(person_id[obs_diff >= 10 & time_elap < 1])) # xxx obs, go up more than 10cm
+  filter(person_id %in% unique(person_id[obs_diff >= 10 & time_elap < 1])) # NO obs, go up more than 10cm
 
 #i <- 1
 #print(long[long$person_id == up$person_id [i], ]) 
 #i <- i + 1
 
 #15. Indicate how many obs. were removed 
-sum(is.na(dat[["height_cm"]])) # xxx height are NA
-sum(is.na(dat[["weight_kg"]])) # xxx weight are NA
+sum(is.na(dat[["height_cm"]])) # 21 height are NA
+sum(is.na(dat[["weight_kg"]])) # 45 weight are NA
 
-# xxx obs.loaded; KEPT xxx  (xxx obs. removed entirely) 
-# xxx NA height loaded; now xxx
-# xxx  weight loaded; kept xxx  weight NA
-
+# 1522 obs.loaded; KEPT 1520  (2 obs. removed entirely) 
+# 21 NA height loaded; now 21
+# 45 NA  weight loaded; kept 45 weight NA
 
 #write.csv(dat, "site_measurements.csv",row.names = FALSE)
